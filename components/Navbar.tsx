@@ -1,10 +1,12 @@
 'use client';
-import { Home, Search, Heart, User, Menu, X } from 'lucide-react';
+import { Home, Search, Heart, Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
+import { UserButton, SignInButton, useUser } from '@clerk/nextjs';
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
+    const { user } = useUser();
 
     return (
         <nav className='sticky top-0 z-50 w-full border-b border-slate-100 bg-white/80 backdrop-blur-md'>
@@ -38,10 +40,15 @@ export default function Navbar() {
                             <Heart size={20} />
                         </button>
                         <div className='h-6 w-px bg-slate-200 mx-1'></div>
-                        <button className='hidden sm:flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-800 transition mx-2 cursor-pointer font-serif active:scale-90 active:bg-blue-600'>
-                            <User size={18} />
-                            <span>Login</span>
-                        </button>
+                        {!user ? (
+                            <SignInButton>
+                                <button className='hidden sm:flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-800 transition mx-2 cursor-pointer font-serif active:scale-90 active:bg-blue-600'>
+                                    <span>Login</span>
+                                </button>
+                            </SignInButton>
+                        ) : (
+                            <UserButton />
+                        )}
 
                         {/* Mobile Menu Button Interaction */}
                         <button
@@ -60,10 +67,15 @@ export default function Navbar() {
                     <Link href='/' className='block text-base font-medium text-slate-600 hover:text-blue-600'>Rent</Link>
                     <Link href='/' className='block text-base font-medium text-slate-600 hover:text-blue-600'>Agents</Link>
                     <Link href='/' className='block text-base font-medium text-slate-600 hover:text-blue-600'>Contact</Link>
-                    <button className='w-full flex items-center justify-center gap-2 bg-blue-600 text-white px-4 py-3 active:scale-90 rounded-xl font-semibold'>
-                        <User size={18} />
-                        Login
-                    </button>
+                    {!user ? (
+                        <SignInButton>
+                            <button className='w-full flex items-center justify-center gap-2 bg-blue-600 text-white px-4 py-3 active:scale-90 rounded-xl font-semibold'>
+                                Login
+                            </button>
+                        </SignInButton>
+                    ) : (
+                        <UserButton />
+                    )}
                 </div>
             )}
         </nav>
