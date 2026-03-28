@@ -62,20 +62,11 @@ export default function Navbar() {
 
             {/* Mobile Dropdown Menu */}
             {isOpen && (
-                <div className='md:hidden justify-center text-center bg-blue-100o p-4 space-y-4 shadow-lg font-serif'>
+                <div className='md:hidden justify-center text-center bg-blue-100 p-4 space-y-4 shadow-lg rounded-xl mx-5 font-serif'>
                     <Link href='/' className='block text-base font-medium text-slate-600 hover:text-blue-600'>Buy</Link>
                     <Link href='/' className='block text-base font-medium text-slate-600 hover:text-blue-600'>Rent</Link>
                     <Link href='/' className='block text-base font-medium text-slate-600 hover:text-blue-600'>Agents</Link>
                     <Link href='/' className='block text-base font-medium text-slate-600 hover:text-blue-600'>Contact</Link>
-                    {!user ? (
-                        <SignInButton>
-                            <button className='w-full flex items-center justify-center gap-2 bg-blue-600 text-white px-4 py-3 active:scale-90 rounded-xl font-semibold'>
-                                Login
-                            </button>
-                        </SignInButton>
-                    ) : (
-                        <UserButton />
-                    )}
                 </div>
             )}
         </nav>

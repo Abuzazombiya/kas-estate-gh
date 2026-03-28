@@ -28,7 +28,7 @@ export default async function Home(){
             <PropertyCard
             key={property.id}
             id={property.id}
-            image={property.image}
+            image={property.image_url}
             price={property.price}
             address={property.address}
             beds={property.beds}
