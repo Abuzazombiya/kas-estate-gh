@@ -29,8 +29,9 @@ export default async function Home(){
             key={property.id}
             id={property.id}
             image={property.image_url}
+            title={property.title}
             price={property.price}
-            address={property.address}
+            address={property.location}
             beds={property.beds}
             baths={property.baths}
             length={property.length}

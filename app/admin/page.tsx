@@ -38,7 +38,7 @@ export default async function AdminDashboard() {
                   <span className="font-medium text-slate-900">{house.title}</span>
                 </td>
                 <td className="p-4 text-slate-600">{house.location}</td>
-                <td className="p-4 text-blue-600 font-bold">{house.price}</td>
+                <td className="p-4 text-blue-600 font-bold">₵{house.price}</td>
                 <td className="p-4 flex text-right space-x-2">
                   <Link href={`/property/${house.id}`} className="inline-block p-2 text-slate-400 hover:text-blue-600 active:scale-90">
                     <ExternalLink size={18} />
@@ -66,7 +66,7 @@ export default async function AdminDashboard() {
               </div>
             </div>
             <div className="flex justify-between items-center border-t border-slate-200 pt-3">
-              <p className="text-blue-600 font-bold">{house.price}</p>
+              <p className="text-blue-600 font-bold">₵{house.price}</p>
               <div className="flex gap-2">
                 <Link href={`/property/${house.id}`} className="p-2 text-slate-400 hover:text-blue-600 active:scale-90">
                   <ExternalLink size={18} />

@@ -2,6 +2,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { isAdminEmail } from "@/lib/admin";
 
+
 export default async function AddPropertyLayout({
   children,
 }: {

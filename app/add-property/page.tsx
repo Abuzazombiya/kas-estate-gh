@@ -1,7 +1,7 @@
 'use client'
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { UploadDropzone } from "@/utils/uploadthing";
+import { UploadButton, UploadDropzone } from "@/utils/uploadthing";
 
 export default function AddProperty() {
     const [imageUrl, setImageUrl] = useState('');
@@ -55,9 +55,29 @@ export default function AddProperty() {
                     ) : (
                         <UploadDropzone
                             endpoint="imageUploader"
-                            onClientUploadComplete={(res) => setImageUrl(res[0].ufsUrl) }
-                            onUploadError={(error) => alert(error.message)}
-                         className="border cursor-pointer border-slate-200"/>
+                            onClientUploadComplete={(res) => {
+                                setImageUrl(res[0].url) 
+                                alert('Image uploaded successfully!');
+                            }}
+                            onUploadError={(error:Error) => {
+                                alert(`ERROR! ${error.message}`);
+                            }}
+                            content={{
+                                label: "Drag & Drop Property Image",
+                                allowedContent: "Max 4MB (Images only)",
+                                button: ({ready, isUploading}) => {
+                                    if (isUploading) return "Uploading...";
+                                    if (ready) return "Upload Image";
+                                    return "Getting ready...";
+                                },
+                            }}
+                            appearance={{
+                            container: "border-2 border-dashed border-slate-300 rounded-xl p-6 text-center cursor-pointer hover:border-blue-600 transition",
+                            label: "text-blue-600 font-semibold hover:text-blue-700",
+                            allowedContent: "text-slate-500 text-xs",
+                            button: "bg-blue-600 hover:bg-blue-700 text-white px-10 py-3 rounded-lg font-medium transition-all active:scale-90 disabled:bg-slate-400 disabled:cursor-not-allowed cursor-pointer",
+                            }}
+                        />
                     )}
                 </div>
 

@@ -3,6 +3,7 @@ import Link from "next/link";
 
 interface PropertyProps {
     id: string;
+    title: string;
     image: string;
     price: string;
     address: string;
@@ -11,7 +12,7 @@ interface PropertyProps {
     length: number;
 }
 
-export default function PropertyCard({id, image, price, address, beds, baths, length}: PropertyProps) {
+export default function PropertyCard({id, title, image, price, address, beds, baths, length}: PropertyProps) {
     return (
         <Link href={`/property/${id}`}>
 
@@ -21,8 +22,9 @@ export default function PropertyCard({id, image, price, address, beds, baths, le
                 alt={address}
                 className="w-full h-50 object-cover group-hover:scale-105 transition-transform duration-500 ease-out rounded-sm" />
             <div className="p-5">
+                <h2 className="text-xl font-bold text-slate-900 mb-2 font-serif">{title}</h2>
 
-                <h3 className="text-2xl font-bold text-slate-900 mb-1 font-serif">{price}</h3>
+                <h3 className="text-2xl font-bold text-slate-900 mb-1 font-serif">₵{price}</h3>
                 <p className="flex items-center text-slate-500 text-sm mb-6"><MapPin size={14} className="mr-1 text-blue-600" />
                     {address}</p>
 
