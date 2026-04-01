@@ -1,6 +1,17 @@
+"use client"
 import {Search, MapPin} from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export default function Hero () {
+    const [tempSearch, setTempSearch] = useState("");
+    const router = useRouter();
+
+    const handleHeroSearch = (e: React.FormEvent) => {
+        e.preventDefault();
+
+        router.push(`/?search=${tempSearch}#results`)
+    }
     return(
         <section className='relative h-150 w-full flex items-center justify-center overflow-hidden'>
 
@@ -17,12 +28,14 @@ export default function Hero () {
 
                 {/* Search Bar Card */}
 
-                <div className='bg-white p-2 md:p-4 rounded-2xl shadow-2xl flex flex-col md:flex-row gap-4 items-center'>
+                <form onSubmit={handleHeroSearch} className='bg-white p-2 md:p-4 rounded-2xl shadow-2xl flex flex-col md:flex-row gap-4 items-center'>
                     <div className='flex items-center gap-3 px-4 flex-1 w-full border-b md:border-b-0 md:border-r border-slate-100 py-2'>
                         <MapPin className='text-blue-600' size={20}/>
                         <input 
                         type="text" 
                         placeholder='Enter City, Neighborhood, or Zip...' 
+                        value={tempSearch}
+                        onChange={(e) => setTempSearch(e.target.value)}
                         className='w-full outline-none text-slate-700 placeholder:text-slate-400 placeholder:italic font-medium font-serif' />
                     </div>
 
@@ -32,12 +45,12 @@ export default function Hero () {
                             <option>For Rent</option>
                         </select>
 
-                        <button className='cursor-pointer w-fit md:w-auto flex rounded-lg font-serif bg-blue-600 hover:bg-blue-700 text-white px-6 md:px-8 py-3 gap-2 transition-all active:scale-95'>
+                        <button type="submit" className='cursor-pointer w-fit md:w-auto flex rounded-lg font-serif bg-blue-600 hover:bg-blue-700 text-white px-6 md:px-8 py-3 gap-2 transition-all active:scale-95'>
                             <Search size={20} />
                             <span>Search</span>
                         </button>
                     </div>
-                </div>
+                </form>
             </div>
         </section>
     );

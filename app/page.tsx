@@ -1,43 +1,57 @@
 import Hero from "@/components/Hero";
 import PropertyCard from "@/components/PropertyCard";
-import Link from "next/link";
 import { sql } from "@/lib/db";
+import SearchBar from "@/components/SearchBar";
 
-export default async function Home(){
+export default async function Home(props: {
+  searchParams: Promise<{ search?: string }>;
+}) {
+  const searchParams = await props.searchParams;
+  const query = searchParams?.search || "";
 
-  const properties = await sql`SELECT * FROM properties ORDER BY created_at DESC`;
-  properties && console.log('DB Connected Successfully')
+  const properties = await sql`
+  SELECT * FROM properties
+  WHERE location ILIKE ${'%' + query + '%'}
+  OR title ILIKE ${'%' + query + '%'}
+  ORDER BY created_at DESC
+   `;
+
+    properties ? console.log("DB Connected") : console.log("DB Connection Failed");
 
   return (
     <main className="min-h-screen bg-slate-50 p-8">
 
-    <Hero />
+      <Hero />
 
       <div className="max-w-7xl mx-auto px-6 py-20">
-        <div className="flex justify-between items-end mb-10">
-        <div>
-        <h1 className="text-3xl font-bold mb-8 text-slate-800 font-serif">Featured Properties</h1>
-        <p className="text-slate-500 mt-2 italic font-serif">Hand-picked homes just for you</p>
+        <div className="text-center mb-16">
+        <h1 className="text-5xl font-extrabold text-slate-900 mb-4">Find Your Dream Home</h1>
+        <p className="text-slate-500 text-lg">Discover the best properties across Ghana.</p>
         </div>
 
-        <Link href='/' className="text-blue-600 font-semibold hover:underline hidden sm:block">View all properties →</Link>
-        </div>
+        <SearchBar />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {properties.map((property) => (
+       {properties.length > 0 ? (
+        <div id="results" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {properties.map((property: any) => (
             <PropertyCard
-            key={property.id}
-            id={property.id}
-            image={property.image_url}
-            title={property.title}
-            price={property.price}
-            address={property.location}
-            beds={property.beds}
-            baths={property.baths}
-            length={property.length}
+              key={property.id}
+              id={property.id}
+              image={property.image_url}
+              title={property.title}
+              price={property.price}
+              address={property.location}
+              beds={property.beds}
+              baths={property.baths}
+              length={property.length}
             />
           ))}
         </div>
+        ) : (
+          <div className="text-center py-20 border-2 border-dashed border-slate-100 rounded-3xl">
+            <p className="text-slate-400 text-lg italic">No houses found matching "{query}"</p>
+          </div>
+        )}
       </div>
     </main>
   );
