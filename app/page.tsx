@@ -2,6 +2,8 @@ import Hero from "@/components/Hero";
 import PropertyCard from "@/components/PropertyCard";
 import { sql } from "@/lib/db";
 import SearchBar from "@/components/SearchBar";
+import { Search } from "lucide-react";
+import Link from "next/link";
 
 export default async function Home(props: {
   searchParams: Promise<{ search?: string }>;
@@ -48,8 +50,13 @@ export default async function Home(props: {
           ))}
         </div>
         ) : (
-          <div className="text-center py-20 border-2 border-dashed border-slate-100 rounded-3xl">
-            <p className="text-slate-400 text-lg italic">No houses found matching "{query}"</p>
+          <div className="text-center py-24 bg-slate-50 border-2 border-dashed border-slate-100 rounded-3xl">
+            <div className="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
+              <Search size={24} className="text-slate-400" />
+            </div>
+            <h3 className="text-slate-700 text-lx font-bold">No properties found</h3>
+            <p className="text-slate-500 mt-2 mb-8">Oops 😔, We couldn't find anything matching "{query}". Try a different location.</p>
+            <Link href="/" className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-xl text-white bg-blue-600 hover:bg-blue-700 transition active:scale-90">View All Properties</Link>
           </div>
         )}
       </div>
